@@ -1,37 +1,106 @@
-## Welcome to GitHub Pages
-
-You can use the [editor on GitHub](https://github.com/CoolBitX-Technology/sygna-bridge-ivms/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+## Business example 1
 ```
+{
+  "ivms": {
+    "originator": {
+      "person_type": "NaturalPerson",
+      "name_identifier": {
+        "primary_identifier": "Smith",
+        "secondary_identifier": "Dr Alice",
+        "identifier_type": "LEGL"
+      },
+      "date_and_place_of_birth": {
+        "date_of_birth": "1990-11-19",
+        "place_of_birth": "US"
+      },
+      "account_number": "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2"
+    },
+    "beneficiary": [
+      {
+        "personType": "NaturalPerson",
+        "name_identifier": {
+          "primary_identifier": "Barnes",
+          "secondary_identifier": "Robert",
+          "identifier_type": "LEGL"
+        },
+        "date_and_place_of_birth": {
+          "date_of_birth": "1990-11-19",
+          "place_of_birth": "TZ"
+        },
+        "account_number": "1BVMFfPXJy2TY1x6wm8gow3N5Amw4Etm5h"
+      }
+    ],
+    "originator_vasp": {
+      "personType": "LegalPerson",
+      "name_identifier": {
+        "legal_name": "VASP A",
+        "name_type_code": "LEGL"
+      },
+      "national_identification": {
+        "nation_identifier": "3M5E1GQKGL17HI8CPN20",
+        "identifier_type": "LEIX"
+      }
+    },
+    "payload_metadata": {
+      "transliteration_method": "armn"
+    }
+  }
+}
+```
+* **transliterationMethod:** The method used to map from a national system of writing to Latin script.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/CoolBitX-Technology/sygna-bridge-ivms/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+## Business example 2
+```
+{
+  "ivms": {
+    "originator": {
+      "person_type": "NaturalPerson",
+      "name_identifier": {
+        "primary_identifier": "Wu",
+        "secondary_identifier": "Xinli",
+        "identifier_type": "LEGL"
+      },
+      "local_name_identifier": {
+        "primary_identifier": "吳",
+        "secondary_identifier": "信利",
+        "identifier_type": "LEGL"
+      },
+      "national_identification": {
+        "nation_identifier": "446005",
+        "identifier_type": "RAID",
+        "registration_authority": "RA000553"
+      },
+      "country_of_residence": "TZ",
+      "account_number": ""
+    },
+    "beneficiary": [
+      {
+        "personType": "LegalPerson",
+        "name_identifier": {
+          "legal_name": "ABC Limited",
+          "name_type_code": "LEGL"
+        }
+      },
+      {
+        "personType": "LegalPerson",
+        "name_identifier": {
+          "legal_name": "CBA Trading",
+          "name_type_code": "TRAD"
+        }
+      }
+    ],
+    "payload_metadata": {
+      "transliteration_method": "hani"
+    },
+    "transfer_path": {
+      "personType": "LegalPerson",
+      "name_identifier": {
+        "legal_name": "VASP E",
+        "name_type_code": "LEGL"
+      },
+      "sequence": 0
+    }
+  }
+}
+```
+* **sequence:** The sequence in a serial chain at which the corresponding intermediary VASP participates in the transfer.
