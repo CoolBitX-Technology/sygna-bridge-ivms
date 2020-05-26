@@ -17,7 +17,7 @@
     },
     "beneficiary": [
       {
-        "personType": "NaturalPerson",
+        "person_type": "NaturalPerson",
         "name_identifier": {
           "primary_identifier": "Barnes",
           "secondary_identifier": "Robert",
@@ -31,7 +31,7 @@
       }
     ],
     "originator_vasp": {
-      "personType": "LegalPerson",
+      "person_type": "LegalPerson",
       "name_identifier": {
         "legal_name": "VASP A",
         "name_type_code": "LEGL"
@@ -75,14 +75,14 @@
     },
     "beneficiary": [
       {
-        "personType": "LegalPerson",
+        "person_type": "LegalPerson",
         "name_identifier": {
           "legal_name": "ABC Limited",
           "name_type_code": "LEGL"
         }
       },
       {
-        "personType": "LegalPerson",
+        "person_type": "LegalPerson",
         "name_identifier": {
           "legal_name": "CBA Trading",
           "name_type_code": "TRAD"
@@ -93,7 +93,7 @@
       "transliteration_method": "hani"
     },
     "transfer_path": {
-      "personType": "LegalPerson",
+      "person_type": "LegalPerson",
       "name_identifier": {
         "legal_name": "VASP E",
         "name_type_code": "LEGL"
