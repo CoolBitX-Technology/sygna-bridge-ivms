@@ -1,21 +1,94 @@
 openapi: 3.0.0
 info:
   version: "2"
-  title: Bridge
+  title: IVMS101 code generator by Sygna Bridge
 paths:
   /ivms/example1:
-    get:
+    post:
+      description: 'VASP C, on behalf of originator 吴信利 (Xinli Wu), transfers 1 ETH to ABC Limited (trading as CBA Trading), which holds a custodial wallet with VASP D. VASP C routes ETH transfers through the intermediary VASP E.'
+      summary: 'Example 1'
+      tags:
+        - IVMS
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ivms101.Example1'
+        required: true
       responses:
-        "200":
-          description: ""
-          headers: {}
-          content:
-            "*/*":
-              schema: {}
+        '200':
+            description: ''
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ivms101.Status'
+                examples:
+                  response:
+                    value:
+                      status: OK
 components:
   schemas:
-    ivms101.LocalNaturalPersonNameId:
-      title: LocalNaturalPersonNameId
+    ivms101.Example1:
+      title: Example1
+      example:
+        originator:
+          originatorPersonsList:
+          - naturalPerson:
+              name:
+                nameIdentifiersList:
+                - primaryIdentifier: Wu
+                  secondaryIdentifier: Xinli
+                  nameIdentifierType: LEGL
+                - primaryIdentifier: 吳
+                  secondaryIdentifier: 信利
+                  nameIdentifierType: LEGL
+                localNameIdentifiersList: []
+                phoneticNameIdentifiersList: []
+              geographicAddressesList: []
+              nationalIdentification:
+                nationalIdentifier: '446005'
+                nationalIdentifierType: RAID
+                countryOfIssue: ''
+                registrationAuthority: RA000553
+              customerIdentification: ''
+              countryOfResidence: TZ
+          accountNumbersList:
+          - 1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
+        beneficiary:
+          beneficiaryPersonsList:
+          - legalPerson:
+              name:
+                nameIdentifiersList:
+                - legalPersonName: ABC Limited
+                  legalPersonNameIdentifierType: LEGL
+                localNameIdentifiersList: []
+                phoneticNameIdentifiersList: []
+              geographicAddressesList: []
+              customerNumber: ''
+              countryOfRegistration: ''
+          - legalPerson:
+              name:
+                nameIdentifiersList:
+                - legalPersonName: CBA Trading
+                  legalPersonNameIdentifierType: LEGL
+                localNameIdentifiersList: []
+                phoneticNameIdentifiersList: []
+              geographicAddressesList: []
+              customerNumber: ''
+              countryOfRegistration: ''
+          accountNumbersList:
+          - 00010190CBATRAD
+      properties:
+        originator:
+          $ref: '#/components/schemas/ivms101.Originator'
+        beneficiary:
+          $ref: '#/components/schemas/ivms101.Beneficiary'
+    ivms101.NaturalPersonNameId:
+      title: NaturalPersonNameId
+      example:
+        primary_identifier: 'Wu'
+        secondary_identifier: 'Xinli'
+        name_identifier_type: 'NATURAL_PERSON_NAME_TYPE_CODE_LEGL'
       type: object
       properties:
         primary_identifier:
@@ -25,14 +98,30 @@ components:
         name_identifier_type:
           title: NaturalPersonNameTypeCode
           type: string
-          enum:
-            - NATURAL_PERSON_NAME_TYPE_CODE_ALIA
-            - NATURAL_PERSON_NAME_TYPE_CODE_BIRT
-            - NATURAL_PERSON_NAME_TYPE_CODE_MAID
-            - NATURAL_PERSON_NAME_TYPE_CODE_LEGL
-            - NATURAL_PERSON_NAME_TYPE_CODE_MISC
+          items:
+            $ref: "#/components/schemas/ivms101.NaturalPersonNameTypeCode"
+    ivms101.LocalNaturalPersonNameId:
+      title: LocalNaturalPersonNameId
+      example:
+        primary_identifier: '吳'
+        secondary_identifier: '信利'
+        name_identifier_type: 'NATURAL_PERSON_NAME_TYPE_CODE_LEGL'
+      type: object
+      properties:
+        primary_identifier:
+          type: string
+        secondary_identifier:
+          type: string
+        name_identifier_type:
+          title: NaturalPersonNameTypeCode
+          type: string
+          items:
+            $ref: "#/components/schemas/ivms101.NaturalPersonNameTypeCode"
     ivms101.LocalLegalPersonNameId:
       title: LocalLegalPersonNameId
+      example:
+        legal_person_name: 'ABC Limited'
+        legal_person_name_identifier_type: 'LEGAL_PERSON_NAME_TYPE_CODE_LEGL'
       type: object
       properties:
         legal_person_name:
@@ -40,21 +129,26 @@ components:
         legal_person_name_identifier_type:
           title: LegalPersonNameTypeCode
           type: string
-          enum:
-            - LEGAL_PERSON_NAME_TYPE_CODE_LEGL
-            - LEGAL_PERSON_NAME_TYPE_CODE_SHRT
-            - LEGAL_PERSON_NAME_TYPE_CODE_TRAD
+          items:
+            $ref: "#/components/schemas/ivms101.LegalPersonNameTypeCode"
     ivms101.Address:
       title: Address
+      example:
+        address_type: 'ADDRESS_TYPE_CODE_GEOG'
+        street_name: 'Potential Street'
+        building_number: '24'
+        building_name: 'Weathering Views'
+        post_code: '91765'
+        town_name: 'Walnut'
+        countrySubDivision: 'California'
+        country: 'US'
       type: object
       properties:
         address_type:
           title: AddressTypeCode
           type: string
-          enum:
-            - ADDRESS_TYPE_CODE__HOME
-            - ADDRESS_TYPE_CODE_BIZZ
-            - ADDRESS_TYPE_CODE_GEOG
+          items:
+             $ref: "#/components/schemas/ivms101.AddressTypeCode"
         department:
           type: string
         sub_department:
@@ -89,28 +183,27 @@ components:
           type: string
     ivms101.NationalIdentification:
       title: NationalIdentification
+      example:
+        national_identifier: '446005'
+        national_identifier_type: 'NATIONAL_IDENTIFIER_TYPE_CODE_RAID'
+        registration_authority: 'RA000553'
       type: object
       properties:
         national_identifier:
           type: string
+          description: An identifier issued by an appropriate issuing authority
         national_identifier_type:
           title: NationalIdentifierTypeCode
           type: string
-          enum:
-            - NATIONAL_IDENTIFIER_TYPE_CODE_ARNU
-            - NATIONAL_IDENTIFIER_TYPE_CODE_CCPT
-            - NATIONAL_IDENTIFIER_TYPE_CODE_RAID
-            - NATIONAL_IDENTIFIER_TYPE_CODE_DRLC
-            - NATIONAL_IDENTIFIER_TYPE_CODE_FIIN
-            - NATIONAL_IDENTIFIER_TYPE_CODE_TXID
-            - NATIONAL_IDENTIFIER_TYPE_CODE_SOCS
-            - NATIONAL_IDENTIFIER_TYPE_CODE_IDCD
-            - NATIONAL_IDENTIFIER_TYPE_CODE_LEIX
-            - NATIONAL_IDENTIFIER_TYPE_CODE_MISC
+          items:
+            $ref: '#/components/schemas/ivms101.NationalIdentifierTypeCode'
         country_of_issue:
           type: string
+          description: Country of the issuing authority
         registration_authority:
           type: string
+          description: A code specifying the registration authority
+          # above are belong to type defination
     ivms101.Person:
       title: Person
       type: object
@@ -139,6 +232,10 @@ components:
           type: string
     ivms101.NaturalPersonName:
       title: NaturalPersonName
+      example:
+        primary_identifier: 'Wu'
+        secondary_identifier: 'Xinli'
+        name_identifier_type: 'NATURAL_PERSON_NAME_TYPE_CODE_LEGL'
       type: object
       properties:
         name_identifiers:
@@ -153,30 +250,16 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ivms101.LocalNaturalPersonNameId"
-    ivms101.NaturalPersonNameId:
-      title: NaturalPersonNameId
-      type: object
-      properties:
-        primary_identifier:
-          type: string
-        secondary_identifier:
-          type: string
-        name_identifier_type:
-          title: NaturalPersonNameTypeCode
-          type: string
-          enum:
-            - NATURAL_PERSON_NAME_TYPE_CODE_ALIA
-            - NATURAL_PERSON_NAME_TYPE_CODE_BIRT
-            - NATURAL_PERSON_NAME_TYPE_CODE_MAID
-            - NATURAL_PERSON_NAME_TYPE_CODE_LEGL
-            - NATURAL_PERSON_NAME_TYPE_CODE_MISC
     ivms101.DateAndPlaceOfBirth:
       title: DateAndPlaceOfBirth
+      description: 'If dateOfBirth is specified, the date specified must be a historic date (i.e. a date prior to the current date)'
       type: object
       properties:
         date_of_birth:
+          description: 'Date on which a person is born.'
           type: string
         place_of_birth:
+          description: 'The town and/or the city and/or the suburb and/or the country subdivision and/or the country where the person was born.'
           type: string
     ivms101.LegalPerson:
       title: LegalPerson
@@ -212,6 +295,9 @@ components:
             $ref: "#/components/schemas/ivms101.LocalLegalPersonNameId"
     ivms101.LegalPersonNameId:
       title: LegalPersonNameId
+      example:
+        legal_person_name: 'CBA Trading'
+        legal_person_name_identifier_type: 'LEGAL_PERSON_NAME_TYPE_CODE_TRAD'
       type: object
       properties:
         legal_person_name:
@@ -219,10 +305,8 @@ components:
         legal_person_name_identifier_type:
           title: LegalPersonNameTypeCode
           type: string
-          enum:
-            - LEGAL_PERSON_NAME_TYPE_CODE_LEGL
-            - LEGAL_PERSON_NAME_TYPE_CODE_SHRT
-            - LEGAL_PERSON_NAME_TYPE_CODE_TRAD
+          items:
+            $ref: "#/components/schemas/ivms101.LegalPersonNameTypeCode"
     ivms101.IntermediaryVasp:
       title: IntermediaryVasp
       type: object
@@ -279,27 +363,14 @@ components:
             $ref: "#/components/schemas/ivms101.IntermediaryVasp"
     ivms101.PayloadMetadata:
       title: PayloadMetadata
+      example:
+        transliteration_method: 'TRANSLITERATION_METHOD_CODE_HANI'
       type: object
       properties:
         transliteration_method:
           type: array
           items:
-            title: TransliterationMethodCode
-            type: string
-            enum:
-              - TRANSLITERATION_METHOD_CODE_ARAB
-              - TRANSLITERATION_METHOD_CODE_ARAN
-              - TRANSLITERATION_METHOD_CODE_ARMN
-              - TRANSLITERATION_METHOD_CODE_CYRL
-              - TRANSLITERATION_METHOD_CODE_DEVA
-              - TRANSLITERATION_METHOD_CODE_GEOR
-              - TRANSLITERATION_METHOD_CODE_GREK
-              - TRANSLITERATION_METHOD_CODE_HANI
-              - TRANSLITERATION_METHOD_CODE_HEBR
-              - TRANSLITERATION_METHOD_CODE_KANA
-              - TRANSLITERATION_METHOD_CODE_KORE
-              - TRANSLITERATION_METHOD_CODE_THAI
-              - TRANSLITERATION_METHOD_CODE_OTHR
+            $ref: "#/components/schemas/ivms101.TransliterationMethodCode"
     ivms101.IdentityPayload:
       title: IdentityPayload
       type: object
@@ -318,6 +389,17 @@ components:
           $ref: "#/components/schemas/ivms101.PayloadMetadata"
     ivms101.NaturalPersonNameTypeCode:
       title: NaturalPersonNameTypeCode
+      description: Identifies the nature of the name being specified for a natural person ([IVMS Ref. NaturalPersonNameTypeCode](https://intervasp.org/)).>
+
+              * `ALIA` - Alias name, A name other than the legal name by which a natural person is also known
+
+              * `BIRT` - Name at birth, The name given to a natural person at birth
+
+              * `MAID` - Maiden name, The original name of a natural person who has changed their name after marriage
+
+              * `LEGL` - Legal name, The name that identifies a natural person for legal, official or administrative purposes
+
+              * `MISC` - Unspecified, A name by which a natural person may be known but cannot otherwise be categorized
       type: string
       enum:
         - NATURAL_PERSON_NAME_TYPE_CODE_ALIA
@@ -327,6 +409,10 @@ components:
         - NATURAL_PERSON_NAME_TYPE_CODE_MISC
     ivms101.LegalPersonNameTypeCode:
       title: LegalPersonNameTypeCode
+      description: A single value corresponding to the nature of name being specified for the legal person>
+           * `LEGL` - Legal name, Official name under which an organisation is registered
+           * `SHRT` - Short name, Specifies the short name of the organisation
+           * `TRAD` - Trading name, Name used by a business for commercial purposes, although its registered legal name, used for contracts and other formal situations, may be another
       type: string
       enum:
         - LEGAL_PERSON_NAME_TYPE_CODE_LEGL
@@ -334,13 +420,40 @@ components:
         - LEGAL_PERSON_NAME_TYPE_CODE_TRAD
     ivms101.AddressTypeCode:
       title: AddressTypeCode
+      description: ([IVMS Ref. AddressTypeCode](https://intervasp.org/))>
+
+              * `HOME` - Residential, Address is the home address
+
+              * `BIZZ` - Business, Address is the business address
+
+              * `GEOG` - Geographic, Address is the unspecified physical (geographical) address suitable for identification of the natural or legal person
       type: string
       enum:
-        - ADDRESS_TYPE_CODE__HOME
+        - ADDRESS_TYPE_CODE_HOME
         - ADDRESS_TYPE_CODE_BIZZ
         - ADDRESS_TYPE_CODE_GEOG
     ivms101.NationalIdentifierTypeCode:
       title: NationalIdentifierTypeCode
+      description: Specifies the type of identifier specified.>
+            * `ARNU` - Alien registration number, Number assigned by a government agency to identify foreign nationals.
+
+            * `CCPT` - Passport number, Number assigned by a passport authority.
+
+            * `RAID` - Registration authority identifier, Identifier of a legal entity as maintained by a registration authority.
+
+            * `DRLC` - Driver license number, Number assigned to a driver's license
+
+            * `FIIN` - Foreign investment identity number, Number assigned to a foreign investor number (other than the alien number)
+
+            * `TXID` - Tax identification number, Number assigned by a tax authority to an entity
+
+            * `SOCS` - Social security number, Number assigned by a social security agency
+
+            * `IDCD` - Identity card number, Number assigned by a national authority to an identity card
+
+            * `LEIX` - Legal Entity Identifier, Legal Entity Identifier (LEI) assigned in accordance with ISO 1744211
+
+            * `MISC` - Unspecified, A national identifier which may be known but which cannot otherwise be categorized or the category of which the sender is unable to determine.
       type: string
       enum:
         - NATIONAL_IDENTIFIER_TYPE_CODE_ARNU
@@ -370,3 +483,13 @@ components:
         - TRANSLITERATION_METHOD_CODE_KORE
         - TRANSLITERATION_METHOD_CODE_THAI
         - TRANSLITERATION_METHOD_CODE_OTHR
+    ivms101.Status:
+      title: Status
+      example:
+        status: OK
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
