@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  version: "2"
-  title: IVMS101 code generator by Sygna Bridge
+  version: "2.0"
+  title: IVMS101 sample output of Sygna Bridge
 paths:
   /ivms/example1:
       post:
@@ -573,6 +573,7 @@ components:
     ivms101.NationalIdentifierTypeCode:
       title: NationalIdentifierTypeCode
       description: Specifies the type of identifier specified.>
+
             * `ARNU` - Alien registration number, Number assigned by a government agency to identify foreign nationals.
 
             * `CCPT` - Passport number, Number assigned by a passport authority.
