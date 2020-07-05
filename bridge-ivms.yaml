@@ -64,22 +64,23 @@ components:
                   name_identifier_type: LEGL
                 phonetic_name_identifiers: []
               geographic_addresses: 
-                address_type: GEOG
-                department: ''
-                sub_department: ''
-                street_name: Potential Street
-                building_number: '24'
-                building_name: Weathering Views
-                floor: ''
-                post_box: ''
-                room: ''
-                post_code: '91765'
-                town_name: Walnut
-                town_location_name: ''
-                district_name: ''
-                country_sub_division: California
-                address_line: []
-                country: US
+                - 
+                  address_type: GEOG
+                  department: ''
+                  sub_department: ''
+                  street_name: Potential Street
+                  building_number: '24'
+                  building_name: Weathering Views
+                  floor: ''
+                  post_box: ''
+                  room: ''
+                  post_code: '91765'
+                  town_name: Walnut
+                  town_location_name: ''
+                  district_name: ''
+                  country_sub_division: California
+                  address_line: []
+                  country: US
               national_identification:
                 name_identifiers: '446005'
                 national_identifier_type: RAID
